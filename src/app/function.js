@@ -21,35 +21,6 @@ define(['zepto'], function () {
         off: function (name) {
             delete _func_on_cache[name]
         },
-
-        //获取图片
-        get_image: function (url, $width, $height, $times) {
-            if (!url) return ''
-            //return (url && url.indexOf('http') == -1) && G.cdn_host + url || url
-            //'http://img2.wxpai.cn/upload/100038_201554_1430731435861_24.jpg@60w_60h_1x.jpg'
-            $times = $times || 1
-            if (!$width) {
-                var windowswidth = $(window).width()
-                if (windowswidth <= 320) {
-                    url = url + '@320w_1x.jpg'
-                }
-                else if (windowswidth <= 480) {
-                    url = url + '@480w_1x.jpg'
-                }
-                else if (windowswidth <= 640) {
-                    url = url + '@640w_1x.jpg'
-                } else {
-                    url = url + '@800w_1x.jpg'
-                }
-                url = (url && url.indexOf('http') == -1) && G.cdn_host + url || url
-                url = url.replace('fs.wxpai', 'img2.wxpai')
-            } else {
-                url = url + '@' + $width + 'w_' + $height + 'h_' + $times + 'x.jpg'
-                url = (url && url.indexOf('http') == -1) && G.cdn_host + url || url
-                url = url.replace('fs.wxpai', 'img2.wxpai')
-            }
-            return url
-        },
         json_length: function (o) {
             if (o) {
                 return Object.keys(o).length
