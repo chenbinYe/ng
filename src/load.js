@@ -42,10 +42,6 @@ var _get_ent_code = function (name) {
     return a
 }
 
-//获取商城的ent_code
-//G.query.ent_code = parseInt(_get_ent_code('ent_code')) || '100038'
-
-
 //基础库加载
 seajs.use([
     'zepto',
@@ -63,19 +59,9 @@ seajs.use([
                 ent_code: G.query.ent_code
             }
         }
-        G.api_host = 'http://172.18.6.198:8080/ecomm/'
-        //G.cdn_host = 'http://dev.fs.wxpai.cn/'
         G.load_version = Math.random()
     }
-
-    //定位到授权页面获取授权信息
-    var _cb_to_oauth = function (data) {
-        var clientToken = data.client_token
-        store.set('client-token-' + G.query.ent_code, clientToken)
-        store.set('goto_hash', window.location.hash)
-        window.location.href = G.wx_config_host + 'oauth2/go?entCode=' + G.query.ent_code + '&clientToken=' + clientToken + '&rmd=' + Math.random()
-    }
-//angular 模块库加载
+    //angular 模块库加载
     var bootstrap_ng = function () {
         seajs.use([
            // 'frozen',
@@ -121,15 +107,9 @@ seajs.use([
                         G.user.version = G.user_version
                         G.user.appId = res.data.enterprise.appId
                         G.user.ent_code = res.data.enterprise.ent_code
-                        store.set('user_' + G.query.ent_code, G.user)
                         //启动angular操作
                         bootstrap_ng()
                         //判断是否需要定位到特定的页面
-                        var goto_hash = store.get('goto_hash') || false
-                        if (goto_hash) {
-                            window.location.hash = goto_hash
-                            store.remove('goto_hash')
-                        }
                     } else {
                         _cb_to_oauth(res.data)
                     }
