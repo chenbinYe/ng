@@ -12,7 +12,7 @@ define(['angular'], function(require, exports, module) {
             //var conf = {module: 'shop', controller: 'special', action: 'liuyi', version: G.load_version || ''}
             //var conf = {module: 'shop', controller: 'game', action: 'seckill', version: G.load_version || ''}
             var conf = {
-                module: 'blog',
+                module: 'test',
                 controller: 'index',
                 action: 'index',
                 version: G.load_version || ''

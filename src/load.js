@@ -27,21 +27,6 @@ seajs.config({
 });
 
 
-var _get_ent_code = function (name) {
-
-    var a = window.location.host
-    a = a&& a.split('.')[0]||null
-    a = parseInt(a)
-    //防止debug后产生错误提示 默认shop id为大于等于六位数
-    if(!a|| a<99999){
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
-        return null;
-    }
-    return a
-}
-
 //基础库加载
 seajs.use([
     'zepto',
@@ -50,17 +35,6 @@ seajs.use([
   //  'site/' + G.query.ent_code//获取商城对应的静态数据
 ], function () {
 
-    //测试数据 debug 模式
-    if (G.debug) {
-        if (G.debug === 2) {
-            G.user = {
-                id: 1,
-                name: 'ken',
-                ent_code: G.query.ent_code
-            }
-        }
-        G.load_version = Math.random()
-    }
     //angular 模块库加载
     var bootstrap_ng = function () {
         seajs.use([
@@ -87,9 +61,8 @@ seajs.use([
     }
     //定义网站头
     G.site_name = G.site.name || G.site_name
-    if (G.debug != 2)G.user = store.get('user_' + G.query.ent_code) || false
-    //token操作
-    var localToken = store.get('client-token-' + G.query.ent_code) || false
+
+
     if ((!G.user || G.user.version != G.user_version || !localToken) && G.debug != 2  && 1==0) {
         //请求新数据
         $.ajax({
@@ -125,7 +98,6 @@ seajs.use([
         //G.user.ent_code = G.query.ent_code
         //启动angular操作
         bootstrap_ng()
-
     }
 
 })
