@@ -38,3 +38,7 @@ G.LoadFunction = [
     '1',
     '2'
 ]
+
+
+//base request load
+G.BaseRequest = false

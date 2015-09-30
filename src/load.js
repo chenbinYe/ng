@@ -62,42 +62,15 @@ seajs.use([
     //定义网站头
     G.site_name = G.site.name || G.site_name
 
-
-    if ((!G.user || G.user.version != G.user_version || !localToken) && G.debug != 2  && 1==0) {
-        //请求新数据
-        $.ajax({
-            //url: G.paiplus_host + 'app/member/' + G.query.ent_code + '/openApi/get?rmd=' + Math.random(),
-            url: G.wx_config_host + 'client/info?rmd=' + Math.random(),
-            headers: {'X-Client-Token': localToken},
-            success: function (res) {
-                if (res.errcode === 0) {
-                    if (res.data && res.data.user) {
-
-                        //用户全局赋值
-                        G.user = res.data.user
-                        G.user.name = G.user.name || G.user.nickName
-                        G.user.id = G.user.id || G.user.mid
-                        G.user.version = G.user_version
-                        G.user.appId = res.data.enterprise.appId
-                        G.user.ent_code = res.data.enterprise.ent_code
-                        //启动angular操作
-                        bootstrap_ng()
-                        //判断是否需要定位到特定的页面
-                    } else {
-                        _cb_to_oauth(res.data)
-                    }
-                } else {
-                    _cb_to_oauth(res.data)
-                }
-            },
-            error: function (e) {
-                console.log('load api error', e)
-            }
+    if (G.BaseRequest) {
+        seajs.use([
+            'config/base_request'
+        ],function(){
+            bootstrap_ng()
         })
     } else {
         //G.user.ent_code = G.query.ent_code
         //启动angular操作
         bootstrap_ng()
     }
-
 })
