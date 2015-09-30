@@ -31,6 +31,7 @@ if (G.debug) {
     G.load_version = Math.random()
 }
 
+//test
 
 //base function load
 G.LoadProjectFunctionFlag = false
